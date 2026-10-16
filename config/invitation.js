@@ -15,9 +15,9 @@ export const invitation = {
   ceremony: {
     label: "Baptism Ceremony",
     time: "At 11:00 AM",
-    venue: "San Antonio De Padua Parish",
+    venue: "Antipolo Cathedral",
     address: "Antipolo City",
-    mapQuery: "San Antonio De Padua Parish Antipolo City",
+    mapQuery: "14.587615,121.176590",
   },
 
   reception: {
