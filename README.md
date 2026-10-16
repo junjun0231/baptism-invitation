@@ -1,4 +1,4 @@
-# Oriane Dara's Baptism & 1st Birthday — Invitation
+# Oriane Dara N. Bobis's Baptism & 1st Birthday — Invitation
 
 A soft, watercolor spring-garden invitation built with Next.js (App Router), React and
 Tailwind CSS. Blush-pink background, cherry-blossom corners, gently fluttering butterflies,
@@ -38,7 +38,9 @@ vercel
   date, ceremony and reception details (venue, time, address, map query), the portrait photo
   (`photo.src`, blank shows the designed placeholder frame), the `sponsors` Ninong & Ninang
   entries (`photo` points at the list images in `public/`, `names` power the alt text and
-  text fallback), RSVP deadline, thank-you line and contact number.
+  text fallback), the background `music` (set `youtubeId` for a YouTube track or `src` for a
+  local file; leaving both blank hides the floating music toggle), RSVP deadline and
+  thank-you line.
 - **`tailwind.config.js`** — the blush/rose/burgundy/sage/gold color palette, the script and
   serif font families, soft shadows, the gold "shine" gradient and every keyframe/animation
   (flutter, bob, wing, twinkle, drift, fall, tick, shimmer).
@@ -51,7 +53,11 @@ vercel
   perched fairy and blossom corners. To show a real photo, add the image to `public/` and set
   `photo.src` in the config.
 - **`components/Sponsors.js`** — the Ninong & Ninang list.
-- **`components/decor/`** — all inline SVG decorations: `CornerFlowers`, `Butterfly`,
+- **`components/BackgroundMusic.js`** — the background music with the floating toggle button
+  (bottom-right). Plays a hidden YouTube player when `music.youtubeId` is set, or a local
+  audio file for `music.src`; renders nothing while both are blank.
+- **`components/decor/`** — all inline SVG decorations: `Blossom` (the shared cherry
+  blossom, plus the `BlossomIcon` standalone variant), `CornerFlowers`, `Butterfly`,
   `Fairy`, `Sparkles`, `Petals`, `FairyDust`, `Divider`, `Monogram` and `PaperTexture`.
 
 ## Accessibility & performance

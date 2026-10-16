@@ -1,6 +1,6 @@
 // Edit everything about the invitation here.
 // The child's name lives here once and is reused for the title, metadata and calendar.
-const childName = "Oriane Dara";
+const childName = "Oriane Dara N. Bobis";
 
 export const invitation = {
   childName,
@@ -71,7 +71,14 @@ export const invitation = {
     },
   },
 
+  // Background music. Set `youtubeId` (the "v=" part of a YouTube link) OR `src`
+  // (a direct audio file in /public). Leave both empty to disable.
+  music: {
+    youtubeId: "-AGhQYYe30U",
+    src: "",
+    volume: 0.6,
+  },
+
   rsvpDeadline: "November 20, 2026",
   thankYou: "We can't wait to celebrate with you.",
-  contact: "+63 900 000 0000",
 };

@@ -14,6 +14,7 @@ export default function Hero() {
       <Fairy
         pose="hover"
         delay={0.5}
+        fly
         className="absolute right-2 top-16 h-24 w-24 opacity-90 sm:right-10 sm:top-24 sm:h-32 sm:w-32"
       />
       <Sparkles className="pointer-events-none absolute left-1 top-20 h-24 w-24 opacity-80 sm:left-8 sm:h-28 sm:w-28" />
@@ -41,11 +42,11 @@ export default function Hero() {
 
         <Reveal delay={460}>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-5">
-            <Butterfly className="h-8 w-10 sm:h-10 sm:w-12" delay={0} />
+            <Butterfly className="h-8 w-10 sm:h-10 sm:w-12" delay={0} fly />
             <p className="font-serif text-2xl text-burgundy sm:text-3xl">
               {formatLongDate(invitation.eventDate)}
             </p>
-            <Butterfly className="h-8 w-10 sm:h-10 sm:w-12" delay={1.3} />
+            <Butterfly className="h-8 w-10 sm:h-10 sm:w-12" delay={1.3} fly />
           </div>
         </Reveal>
 

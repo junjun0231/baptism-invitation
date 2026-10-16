@@ -8,6 +8,7 @@ import Portrait from "@/components/Portrait";
 import Details from "@/components/Details";
 import Sponsors from "@/components/Sponsors";
 import AddToCalendar from "@/components/AddToCalendar";
+import BackgroundMusic from "@/components/BackgroundMusic";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <Fairy
           pose="perch"
           delay={1}
+          fly
           className="absolute right-8 top-36 h-16 w-16 opacity-75 sm:right-20 sm:top-44 sm:h-20 sm:w-20"
         />
 
@@ -37,6 +39,8 @@ export default function Home() {
       <Sponsors />
       <AddToCalendar />
       <Footer />
+
+      <BackgroundMusic />
     </main>
   );
 }

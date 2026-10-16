@@ -73,6 +73,12 @@ module.exports = {
           "0%, 100%": { boxShadow: "0 0 0 rgba(201, 162, 75, 0)" },
           "50%": { boxShadow: "0 0 22px rgba(201, 162, 75, 0.45)" },
         },
+        fly: {
+          "0%, 100%": { transform: "translate3d(0px, 0px, 0) rotate(-4deg)" },
+          "25%": { transform: "translate3d(8px, -16px, 0) rotate(3deg)" },
+          "50%": { transform: "translate3d(0px, -26px, 0) rotate(-2deg)" },
+          "75%": { transform: "translate3d(-8px, -14px, 0) rotate(4deg)" },
+        },
       },
       animation: {
         flutter: "flutter 8s ease-in-out infinite",
@@ -86,6 +92,7 @@ module.exports = {
         tick: "tick 0.45s ease-out",
         shimmer: "shimmer 7s linear infinite",
         glow: "glow 4s ease-in-out infinite",
+        fly: "fly 12s ease-in-out infinite",
       },
     },
   },

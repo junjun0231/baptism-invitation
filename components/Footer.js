@@ -11,6 +11,7 @@ export default function Footer() {
       <Fairy
         pose="perch"
         delay={0.8}
+        fly
         className="absolute bottom-4 right-3 h-24 w-24 opacity-85 sm:right-14 sm:h-28 sm:w-28"
       />
 
@@ -21,11 +22,6 @@ export default function Footer() {
         <Reveal delay={120}>
           <p className="mt-6 font-script text-3xl text-burgundy [text-wrap:balance] sm:text-4xl">
             {invitation.thankYou}
-          </p>
-        </Reveal>
-        <Reveal delay={240}>
-          <p className="mt-6 font-serif text-base text-burgundy/70">
-            Questions? Call or text {invitation.contact}
           </p>
         </Reveal>
       </div>

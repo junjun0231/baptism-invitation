@@ -1,21 +1,7 @@
 import Reveal from "./Reveal";
 import Fairy from "./decor/Fairy";
+import { BlossomIcon } from "./decor/Blossom";
 import { invitation } from "@/config/invitation";
-
-const petals = [0, 72, 144, 216, 288];
-
-function Blossom({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" focusable="false">
-      <g fill="#F4B6C2">
-        {petals.map((angle) => (
-          <ellipse key={angle} cx="12" cy="7.4" rx="2.6" ry="4" transform={`rotate(${angle} 12 12)`} />
-        ))}
-      </g>
-      <circle cx="12" cy="12" r="1.7" fill="#C9A24B" />
-    </svg>
-  );
-}
 
 export default function Portrait() {
   const { photo } = invitation;
@@ -39,7 +25,7 @@ export default function Portrait() {
                     className="pointer-events-none absolute inset-4 rounded-xl border border-dashed border-gold/40"
                     aria-hidden="true"
                   />
-                  <Blossom className="h-12 w-12 opacity-80" />
+                  <BlossomIcon uid="portrait-placeholder" r="22" className="h-12 w-12 opacity-80" />
                   <p className="font-script text-2xl text-rose/90">Your photo here</p>
                   <p className="max-w-[14rem] font-serif text-sm text-burgundy/60">
                     A portrait of {photo.alt} will appear in this frame.
@@ -48,10 +34,10 @@ export default function Portrait() {
               )}
             </div>
 
-            <Blossom className="absolute -left-3 -top-3 h-7 w-7" />
-            <Blossom className="absolute -right-3 -top-3 h-7 w-7" />
-            <Blossom className="absolute -bottom-3 -left-3 h-7 w-7" />
-            <Blossom className="absolute -bottom-3 -right-3 h-7 w-7" />
+            <BlossomIcon uid="portrait-frame" className="absolute -left-3 -top-3 h-7 w-7" />
+            <BlossomIcon uid="portrait-frame" className="absolute -right-3 -top-3 h-7 w-7" />
+            <BlossomIcon uid="portrait-frame" className="absolute -bottom-3 -left-3 h-7 w-7" />
+            <BlossomIcon uid="portrait-frame" className="absolute -bottom-3 -right-3 h-7 w-7" />
           </figure>
 
           <figcaption className="mt-5 font-serif text-sm uppercase tracking-[0.3em] text-rose">
@@ -62,6 +48,7 @@ export default function Portrait() {
         <Fairy
           pose="perch"
           delay={1.1}
+          fly
           className="absolute -right-6 -top-8 h-16 w-16 opacity-85 sm:-right-10 sm:h-20 sm:w-20"
         />
       </div>

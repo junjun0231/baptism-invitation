@@ -1,22 +1,8 @@
 import Reveal from "./Reveal";
 import Divider from "./decor/Divider";
 import Butterfly from "./decor/Butterfly";
+import { BlossomIcon } from "./decor/Blossom";
 import { invitation } from "@/config/invitation";
-
-const petals = [0, 72, 144, 216, 288];
-
-function Blossom({ className = "" }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" focusable="false">
-      <g fill="#F4B6C2">
-        {petals.map((angle) => (
-          <ellipse key={angle} cx="12" cy="7.4" rx="2.6" ry="4" transform={`rotate(${angle} 12 12)`} />
-        ))}
-      </g>
-      <circle cx="12" cy="12" r="1.7" fill="#C9A24B" />
-    </svg>
-  );
-}
 
 function NameList({ label, names }) {
   return (
@@ -57,10 +43,10 @@ function SponsorCard({ item }) {
         </div>
       </a>
 
-      <Blossom className="absolute -left-3 -top-3 h-7 w-7" />
-      <Blossom className="absolute -right-3 -top-3 h-7 w-7" />
-      <Blossom className="absolute -bottom-3 -left-3 h-7 w-7" />
-      <Blossom className="absolute -bottom-3 -right-3 h-7 w-7" />
+      <BlossomIcon uid="sponsor-frame" className="absolute -left-3 -top-3 h-7 w-7" />
+      <BlossomIcon uid="sponsor-frame" className="absolute -right-3 -top-3 h-7 w-7" />
+      <BlossomIcon uid="sponsor-frame" className="absolute -bottom-3 -left-3 h-7 w-7" />
+      <BlossomIcon uid="sponsor-frame" className="absolute -bottom-3 -right-3 h-7 w-7" />
     </figure>
   );
 }
@@ -72,12 +58,12 @@ export default function Sponsors() {
     <section className="relative overflow-hidden px-6 py-20 text-center">
       <div className="relative mx-auto w-full max-w-[44rem]">
         <Reveal>
-          <div className="flex items-center justify-center gap-4">
-            <Butterfly className="h-7 w-9" delay={0.9} />
-            <h2 className="font-script text-4xl text-burgundy [text-wrap:balance] sm:text-5xl">
+          <div className="flex items-center justify-center gap-2 sm:gap-4">
+            <Butterfly className="h-5 w-6 sm:h-7 sm:w-9" delay={0.9} fly />
+            <h2 className="whitespace-nowrap font-script text-3xl text-burgundy sm:text-4xl md:text-5xl">
               {sponsors.heading}
             </h2>
-            <Butterfly className="h-7 w-9" delay={2.4} />
+            <Butterfly className="h-5 w-6 sm:h-7 sm:w-9" delay={2.4} fly />
           </div>
         </Reveal>
 

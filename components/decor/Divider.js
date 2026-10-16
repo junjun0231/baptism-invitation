@@ -1,6 +1,7 @@
+import Blossom from "./Blossom";
+
 // An ornamental gold divider with a small blossom at its centre.
 export default function Divider({ className = "" }) {
-  const petals = [0, 72, 144, 216, 288];
   return (
     <div className={`flex justify-center ${className}`} aria-hidden="true">
       <svg viewBox="0 0 260 28" className="h-6 w-56 sm:w-64" focusable="false">
@@ -23,21 +24,7 @@ export default function Divider({ className = "" }) {
 
         <path d="M126 14 L130 10 L134 14 L130 18 Z" fill="#C9A24B" opacity="0.85" />
 
-        <g transform="translate(118 14)">
-          <g fill="#F4B6C2" opacity="0.9">
-            {petals.map((angle) => (
-              <ellipse
-                key={angle}
-                cx="0"
-                cy="-4"
-                rx="2"
-                ry="3.2"
-                transform={`rotate(${angle})`}
-              />
-            ))}
-          </g>
-          <circle r="1.2" fill="#C9A24B" />
-        </g>
+        <Blossom cx={118} cy={14} r={7} opacity={0.95} uid="divider-blossom" />
 
         <path d="M142 14 L138 10 L134 14 L138 18 Z" fill="#C9A24B" opacity="0.85" />
       </svg>

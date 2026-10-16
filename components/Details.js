@@ -59,17 +59,18 @@ export default function Details() {
         pose="fly"
         flip
         delay={1.4}
+        fly
         className="absolute right-2 top-6 h-20 w-20 opacity-80 sm:right-8 sm:h-24 sm:w-24"
       />
 
       <div className="relative mx-auto w-full max-w-[36rem]">
         <Reveal>
           <div className="flex items-center justify-center gap-4">
-            <Butterfly className="h-7 w-9" delay={0.6} />
+            <Butterfly className="h-7 w-9" delay={0.6} fly />
             <h2 className="font-script text-4xl text-burgundy [text-wrap:balance] sm:text-5xl">
               The Celebration
             </h2>
-            <Butterfly className="h-7 w-9" delay={2.1} />
+            <Butterfly className="h-7 w-9" delay={2.1} fly />
           </div>
         </Reveal>
 
