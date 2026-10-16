@@ -28,6 +28,11 @@ function clamp01(n) {
   return Math.min(Math.max(Number(n) || 0, 0), 1);
 }
 
+function isButtonTarget(event) {
+  const target = event && event.target;
+  return !!(target && typeof target.closest === "function" && target.closest("button"));
+}
+
 let ytApiPromise;
 function loadYouTubeApi() {
   if (typeof window === "undefined") return Promise.resolve(null);
@@ -53,24 +58,36 @@ function loadYouTubeApi() {
 
 // Background music with a small floating toggle. Plays a hidden YouTube player
 // (when `music.youtubeId` is set) or a local audio file (`music.src`). Browsers
-// block autoplay with sound, so playback also starts on the first interaction.
+// block audible autoplay, so playback starts immediately if allowed and falls
+// back to muted playback that unmutes on the first user interaction.
 export default function BackgroundMusic() {
   const { youtubeId = "", src = "", volume = 0.6 } = invitation.music ?? {};
   const containerRef = useRef(null);
   const playerRef = useRef(null);
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(false);
+
+  const addGestureListener = (handler) => {
+    const guarded = (event) => {
+      if (isButtonTarget(event)) return;
+      handler();
+    };
+    window.addEventListener("pointerdown", guarded);
+    window.addEventListener("keydown", guarded);
+    window.addEventListener("touchstart", guarded);
+    return () => {
+      window.removeEventListener("pointerdown", guarded);
+      window.removeEventListener("keydown", guarded);
+      window.removeEventListener("touchstart", guarded);
+    };
+  };
 
   useEffect(() => {
     if (!youtubeId) return;
     let player = null;
     let cancelled = false;
-
-    const attemptPlay = () => {
-      if (!cancelled && player && typeof player.playVideo === "function") {
-        player.playVideo();
-      }
-    };
+    const volumePct = Math.round(clamp01(volume) * 100);
 
     loadYouTubeApi().then((YT) => {
       if (cancelled || !YT || !containerRef.current) return;
@@ -87,27 +104,41 @@ export default function BackgroundMusic() {
         },
         events: {
           onReady: (event) => {
-            event.target.setVolume(Math.round(clamp01(volume) * 100));
-            attemptPlay();
+            const p = event.target;
+            p.setVolume(volumePct);
+            p.playVideo();
+            // If audible autoplay was blocked, start muted so it still plays.
+            setTimeout(() => {
+              if (cancelled) return;
+              const state = p.getPlayerState?.();
+              const started = state === YT.PlayerState.PLAYING || state === YT.PlayerState.BUFFERING;
+              if (!started) {
+                p.mute?.();
+                p.playVideo();
+                setMuted(true);
+              }
+            }, 700);
           },
           onStateChange: (event) => {
-            setPlaying(event.data === YT.PlayerState.PLAYING);
+            if (!cancelled) setPlaying(event.data === YT.PlayerState.PLAYING);
           },
         },
       });
       playerRef.current = player;
     });
 
-    const onInteraction = () => attemptPlay();
-    window.addEventListener("pointerdown", onInteraction);
-    window.addEventListener("keydown", onInteraction);
-    window.addEventListener("touchstart", onInteraction);
+    const removeGesture = addGestureListener(() => {
+      if (!player) return;
+      player.unMute?.();
+      player.setVolume?.(volumePct);
+      player.playVideo?.();
+      setMuted(false);
+      removeGesture();
+    });
 
     return () => {
       cancelled = true;
-      window.removeEventListener("pointerdown", onInteraction);
-      window.removeEventListener("keydown", onInteraction);
-      window.removeEventListener("touchstart", onInteraction);
+      removeGesture();
       playerRef.current = null;
       if (player && typeof player.destroy === "function") player.destroy();
     };
@@ -120,55 +151,73 @@ export default function BackgroundMusic() {
     audio.volume = clamp01(volume);
 
     let cancelled = false;
-    const start = () => {
-      audio
-        .play()
-        .then(() => {
-          if (!cancelled) setPlaying(true);
-        })
-        .catch(() => {});
+    const onPlaying = () => {
+      if (!cancelled) setPlaying(true);
     };
-
-    start();
-
-    const onInteraction = () => {
-      if (audio.paused) start();
+    const onPause = () => {
+      if (!cancelled) setPlaying(false);
     };
-    window.addEventListener("pointerdown", onInteraction);
-    window.addEventListener("keydown", onInteraction);
-    window.addEventListener("touchstart", onInteraction);
+    audio.addEventListener("playing", onPlaying);
+    audio.addEventListener("pause", onPause);
+
+    audio
+      .play()
+      .catch(() => {
+        // Audible autoplay blocked — start muted instead.
+        if (cancelled) return;
+        audio.muted = true;
+        setMuted(true);
+        audio.play().catch(() => {});
+      });
+
+    const removeGesture = addGestureListener(() => {
+      audio.muted = false;
+      setMuted(false);
+      if (audio.paused) audio.play().catch(() => {});
+      removeGesture();
+    });
 
     return () => {
       cancelled = true;
-      window.removeEventListener("pointerdown", onInteraction);
-      window.removeEventListener("keydown", onInteraction);
-      window.removeEventListener("touchstart", onInteraction);
+      removeGesture();
+      audio.removeEventListener("playing", onPlaying);
+      audio.removeEventListener("pause", onPause);
       audio.pause();
     };
   }, [youtubeId, src, volume]);
 
   const toggle = useCallback(() => {
-    if (youtubeId) {
-      const player = playerRef.current;
-      if (!player) return;
+    const player = playerRef.current;
+    const audio = audioRef.current;
+
+    if (player) {
+      if (muted) {
+        player.unMute?.();
+        player.setVolume?.(Math.round(clamp01(volume) * 100));
+        player.playVideo?.();
+        setMuted(false);
+        return;
+      }
       if (playing) player.pauseVideo?.();
       else player.playVideo?.();
       return;
     }
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (audio.paused) {
-      audio
-        .play()
-        .then(() => setPlaying(true))
-        .catch(() => {});
-    } else {
-      audio.pause();
-      setPlaying(false);
+
+    if (audio) {
+      if (muted) {
+        audio.muted = false;
+        setMuted(false);
+        if (audio.paused) audio.play().catch(() => {});
+        return;
+      }
+      if (audio.paused) audio.play().catch(() => {});
+      else audio.pause();
     }
-  }, [youtubeId, playing]);
+  }, [muted, playing, volume]);
 
   if (!youtubeId && !src) return null;
+
+  const active = playing && !muted;
 
   return (
     <>
@@ -185,11 +234,11 @@ export default function BackgroundMusic() {
       <button
         type="button"
         onClick={toggle}
-        aria-label={playing ? "Pause background music" : "Play background music"}
+        aria-label={muted ? "Unmute background music" : playing ? "Pause background music" : "Play background music"}
         aria-pressed={playing}
         className="fixed bottom-5 right-5 z-[60] flex h-12 w-12 touch-manipulation items-center justify-center rounded-full border border-gold/40 bg-white/70 text-burgundy shadow-soft backdrop-blur-sm transition-transform hover:-translate-y-0.5 hover:bg-white hover:shadow-card"
       >
-        <NoteIcon playing={playing} />
+        <NoteIcon playing={active} />
       </button>
     </>
   );

@@ -34,8 +34,9 @@ vercel
 
 ## Customize
 
-- **`config/invitation.js`** — the single source of editable text: opening line, title,
-  date, ceremony and reception details (venue, time, address, map query), the portrait photo
+- **`config/invitation.js`** — the single source of editable text: opening line, the hero
+  `titleLines` (each item renders on its own line), date, ceremony and reception details
+  (venue, time, address, map query), the portrait photo
   (`photo.src`, blank shows the designed placeholder frame), the `sponsors` Ninong & Ninang
   entries (`photo` points at the list images in `public/`, `names` power the alt text and
   text fallback), the background `music` (set `youtubeId` for a YouTube track or `src` for a
@@ -55,7 +56,8 @@ vercel
 - **`components/Sponsors.js`** — the Ninong & Ninang list.
 - **`components/BackgroundMusic.js`** — the background music with the floating toggle button
   (bottom-right). Plays a hidden YouTube player when `music.youtubeId` is set, or a local
-  audio file for `music.src`; renders nothing while both are blank.
+  audio file for `music.src`; renders nothing while both are blank. It tries to autoplay with
+  sound, and if the browser blocks that it plays muted and unmutes on the first interaction.
 - **`components/decor/`** — all inline SVG decorations: `Blossom` (the shared cherry
   blossom, plus the `BlossomIcon` standalone variant), `CornerFlowers`, `Butterfly`,
   `Fairy`, `Sparkles`, `Petals`, `FairyDust`, `Divider`, `Monogram` and `PaperTexture`.

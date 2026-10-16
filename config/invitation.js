@@ -4,9 +4,10 @@ const childName = "Oriane Dara N. Bobis";
 
 export const invitation = {
   childName,
-  // Opening line and title shown in the hero
+  // Opening line and headline shown in the hero. Each headline item renders on
+  // its own line, so the "&" sits centred on a line by itself.
   opening: "Join us to celebrate",
-  title: `${childName}'s Baptism & 1st Birthday Party`,
+  titleLines: ["Oriane Dara's", "Baptism", "&", "1st Birthday Party"],
 
   // ISO date with timezone offset (Philippines = +08:00)
   eventDate: "2026-11-28T11:00:00+08:00",

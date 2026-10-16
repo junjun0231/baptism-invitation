@@ -31,8 +31,12 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={240}>
-          <h1 className="mt-4 animate-shimmer bg-shine bg-[length:200%_100%] bg-clip-text pb-3 font-script text-5xl leading-[1.25] text-transparent [text-wrap:balance] sm:text-6xl md:text-7xl">
-            {invitation.title}
+          <h1 className="mt-4 animate-shimmer bg-shine bg-[length:200%_100%] bg-clip-text pb-3 font-script text-5xl leading-[1.15] text-transparent sm:text-6xl md:text-7xl">
+            {invitation.titleLines.map((line, i) => (
+              <span key={i} className="block">
+                {line}
+              </span>
+            ))}
           </h1>
         </Reveal>
 
