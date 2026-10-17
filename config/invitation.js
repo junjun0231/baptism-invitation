@@ -15,16 +15,16 @@ export const invitation = {
 
   ceremony: {
     label: "Baptism Ceremony",
-    time: "At 11:00 AM",
-    venue: "Antipolo Cathedral",
-    address: "Antipolo City",
-    mapQuery: "14.587615,121.176590",
+    time: "At 11:30 AM",
+    venue: "Parish of the Immaculate Heart of Mary",
+    address: "Daang Bakal (Taktak) Road, Brgy. Dela Paz, Antipolo City",
+    mapQuery: "14.597255,121.160339",
   },
 
   reception: {
     label: "Reception",
     time: "At 12:00 PM",
-    venue: "Bobis Residences",
+    venue: "Bobis Residence",
     address: "5 Puting Bato, Solid Cement Road, Antipolo City",
     // Exact coordinates from the shared map pin (latitude,longitude)
     mapQuery: "14.5750045,121.2025059",

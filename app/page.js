@@ -7,7 +7,6 @@ import Hero from "@/components/Hero";
 import Portrait from "@/components/Portrait";
 import Details from "@/components/Details";
 import Sponsors from "@/components/Sponsors";
-import AddToCalendar from "@/components/AddToCalendar";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import Footer from "@/components/Footer";
 
@@ -37,7 +36,6 @@ export default function Home() {
       <Portrait />
       <Details />
       <Sponsors />
-      <AddToCalendar />
       <Footer />
 
       <BackgroundMusic />
